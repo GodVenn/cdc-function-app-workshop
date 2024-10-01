@@ -11,7 +11,8 @@ app = Flask(__name__)
 @app.route("/get_stuff/<string:stuff_id>")
 def get_stuff(stuff_id: str):
     logging.info("Getting stuff with id '%s'", stuff_id)
-    service = StuffService(api_key=os.environ["STUFF_API_KEY"])
+    api_key = os.environ["STUFF_API_KEY"]
+    service = StuffService(api_key=api_key)
     return service.get_thingy(thing_id=stuff_id)
 
 
