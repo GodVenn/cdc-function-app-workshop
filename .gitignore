@@ -1,0 +1,9 @@
+.venv*/
+venv*/
+.mypy_cache/
+__pycache__/
+dist/
+.coverage*
+.tox/
+docs/_build/
+**/.env
