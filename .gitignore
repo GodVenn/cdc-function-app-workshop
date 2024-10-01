@@ -7,3 +7,4 @@ dist/
 .tox/
 docs/_build/
 **/.env
+**/local.settings.json
