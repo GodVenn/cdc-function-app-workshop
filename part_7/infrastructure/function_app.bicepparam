@@ -5,5 +5,5 @@ param existingStorageAccountName = 'cdcfuncworkshopst'
 param existingKeyVaultName = 'cdc-func-workshop-kv'
 param existingManagedIdentityName = 'cdc-func-workshop-id'
 
-param shortName = 'tlne'
+param shortName = '<your-shortname>'
 param apiKeySecretName = 'STUFF-API-KEY'
