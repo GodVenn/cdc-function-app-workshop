@@ -7,6 +7,8 @@ param shortName string
 var functionAppName = '${shortName}-workshop-function-app'
 param apiKeySecretName string
 
+param functionAppAuthSettings object
+
 // Reference to existing resources
 resource existingStorageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
   name: existingStorageAccountName
@@ -54,6 +56,7 @@ module functionApp 'br/public:avm/res/web/site:0.9.0' = {
       httpsOnly: true
       linuxFxVersion: 'Python|3.11'
     }
+    authSettingV2Configuration: functionAppAuthSettings
     appSettingsKeyValuePairs: {
       AzureWebJobsStorage: 'DefaultEndpointsProtocol=https;AccountName=${existingStorageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${existingStorageAccount.listKeys().keys[0].value}'
       WEBSITE_CONTENTAZUREFILECONNECTIONSTRING: 'DefaultEndpointsProtocol=https;AccountName=${existingStorageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${existingStorageAccount.listKeys().keys[0].value}'
