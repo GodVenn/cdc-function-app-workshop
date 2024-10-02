@@ -10,4 +10,9 @@ CDC function app workshop 2024
 - [Part 6](./part_6/) - Have fix in IaC -> Use keyvault for secrets
 - [Part 7](./part_7/) - Have secret config in keyvault -> Protect API with auth
 - [Part 8](./part_8/) - Have API protected with auth
-- [Part x]() - Improve security in infrastructure - vnet for storage account
+
+Advanced stuff (if time):
+
+- Improve security in infrastructure - vnet for storage account
+- Pipelines?
+- Other triggers?
