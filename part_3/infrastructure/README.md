@@ -12,7 +12,7 @@ Deploy supporting infrastructure (Not needed - already exists):
 
 - `az deployment group create --subscription "Development" -g "cdc-function-app-workshop" --parameters main.bicepparam --name "Local-Deploy-<shortname>"`
 
-
 ## Notes
 
 - Should we add vnet for security? Currently storage account open to all - no bueno
+- Missing managed identity and key vault
