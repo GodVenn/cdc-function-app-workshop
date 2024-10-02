@@ -1,9 +1,11 @@
 param existingStorageAccountName string
 param existingApplicationInsightsName string
+param existingManagedIdentityName string
+param existingKeyVaultName string
 
 param shortName string
 var functionAppName = '${shortName}-workshop-function-app'
-param apiKey string
+param apiKeySecretName string
 
 // Reference to existing resources
 resource existingStorageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
@@ -12,6 +14,14 @@ resource existingStorageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' e
 
 resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = {
   name: existingApplicationInsightsName
+}
+
+resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
+  name: existingKeyVaultName
+}
+
+resource existingRuntimeId 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
+  name: existingManagedIdentityName
 }
 
 // App service plan created per function app because it is consumption plan
@@ -35,6 +45,11 @@ module functionApp 'br/public:avm/res/web/site:0.9.0' = {
     appInsightResourceId: applicationInsights.id
     storageAccountResourceId: existingStorageAccount.id
     serverFarmResourceId: appServicePlan.outputs.resourceId
+    keyVaultAccessIdentityResourceId: existingRuntimeId.id
+    managedIdentities: {
+      systemAssigned: false
+      userAssignedResourceIds: [existingRuntimeId.id]
+    }
     siteConfig: {
       httpsOnly: true
       linuxFxVersion: 'Python|3.11'
@@ -46,7 +61,7 @@ module functionApp 'br/public:avm/res/web/site:0.9.0' = {
       FUNCTIONS_EXTENSION_VERSION: '~4'
       WEBSITE_NODE_DEFAULT_VERSION: '~14'
       FUNCTIONS_WORKER_RUNTIME: 'python'
-      STUFF_API_KEY: apiKey
+      STUFF_API_KEY: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=${apiKeySecretName})'
     }
     diagnosticSettings: [
       {
