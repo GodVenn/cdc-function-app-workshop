@@ -36,6 +36,7 @@ module functionApp 'br/public:avm/res/web/site:0.9.0' = {
     serverFarmResourceId: appServicePlan.outputs.resourceId
     siteConfig: {
       httpsOnly: true
+      linuxFxVersion: 'Python|3.11'
     }
     appSettingsKeyValuePairs: {
       AzureWebJobsStorage: 'DefaultEndpointsProtocol=https;AccountName=${existingStorageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${existingStorageAccount.listKeys().keys[0].value}'
