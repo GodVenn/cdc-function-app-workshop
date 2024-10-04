@@ -11,4 +11,4 @@ class StuffService:
         ######
         #  Calls external service with API key
         ######
-        return "spoon"
+        return f"spoon #{thing_id}"
